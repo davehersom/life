@@ -46,11 +46,9 @@ class Board
 
   def next_generation
     #TODO clear edges?
-    #print "New Generation\n"
     1.upto @rows do |row|
       1.upto @columns do |column|
         my_neighbors = neighbor_count(row,column)
-        #printf("%d-",my_neighbors)
         if (cell_value(row,column) == :on) && ((my_neighbors == 2) || (my_neighbors == 3)) ||
           (my_neighbors == 3)then
           set_next_cell_value(row,column,:on)
@@ -58,8 +56,9 @@ class Board
           set_next_cell_value(row,column,:off)
         end
       end
-      #print "\n"
     end
+ #Display board
+    printf("------------\n")
     1.upto @rows do |row|
       1.upto @columns do |column|
         set_cell_value(row,column, next_cell_value(row,column))
@@ -71,11 +70,6 @@ class Board
       end
       printf "\n"
     end
-    #@cell.each do |hash_key, hash_value|
-    #  #puts hash_key+" "+hash_value.next_value.to_s+" "+ hash_value.value.to_s
-    #  @cell[hash_key].value = @cell[hash_key].next_value
-    #  #hash_value.value = hash_value.next_value
-    #end
   end
 
   def initialize(rows=0, columns=0)
