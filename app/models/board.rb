@@ -32,25 +32,22 @@ class Board
 
   def neighbor_count(row,column)
     my_neighbors = 0
-    if cell_value(row-1, column) == :on then  my_neighbors += 1 end
-    if cell_value(row-1, column-1) == :on then  my_neighbors += 1 end
-    if cell_value(row-1, column+1) == :on then  my_neighbors += 1 end
-    if cell_value(row+1, column) == :on then  my_neighbors += 1 end
-    if cell_value(row+1, column-1) == :on then  my_neighbors += 1 end
-    if cell_value(row+1, column+1) == :on then  my_neighbors += 1 end
-    if cell_value(row, column+1) == :on then  my_neighbors += 1 end
-    if cell_value(row, column-1) == :on then  my_neighbors += 1 end
+    (row-1).upto(row+1) do |r|
+      (column-1).upto(column+1) do |c|
+        if (cell_value(r,c) == :on) && ([r,c] != [row,column]) then my_neighbors += 1 end
+      end
+    end
     #puts "My Neighbors = "+my_neighbors.to_s+" "+row.to_s+" "+column.to_s
     return my_neighbors
   end
 
-  def next_generation
+  def next_generation(print_new = false)
     #TODO clear edges?
     1.upto @rows do |row|
       1.upto @columns do |column|
         my_neighbors = neighbor_count(row,column)
-        if (cell_value(row,column) == :on) && ((my_neighbors == 2) || (my_neighbors == 3)) ||
-          (my_neighbors == 3)then
+        if ((cell_value(row,column) == :on) && ((my_neighbors == 2) || (my_neighbors == 3))) ||
+          (my_neighbors == 3) then
           set_next_cell_value(row,column,:on)
         else
           set_next_cell_value(row,column,:off)
@@ -58,17 +55,19 @@ class Board
       end
     end
  #Display board
-    printf("------------\n")
+    if print_new then printf("------------\n") end
     1.upto @rows do |row|
       1.upto @columns do |column|
         set_cell_value(row,column, next_cell_value(row,column))
-        if next_cell_value(row,column) == :on then
-          printf "*"
-        else
-          printf " "
+        if print_new
+          if next_cell_value(row,column) == :on then
+            printf "*"
+          else
+            printf " "
+          end
         end
       end
-      printf "\n"
+     if print_new then printf "\n" end
     end
   end
 
