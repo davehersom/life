@@ -8,8 +8,6 @@ class Point
 
   validates :value, :inclusion => {:in => %w(on off), :message => 'Value must be :on or :off' }
 
-  # To change this template use File | Settings | File Templates.
-
   def initialize
     @value = :off
   end

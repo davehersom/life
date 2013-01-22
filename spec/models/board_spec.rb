@@ -25,7 +25,7 @@ describe "Board" do
     b.cell_value(1,1).should eq :on
   end
 
-  it "should count neighbors correctly" do
+  it "should count current neighbors correctly" do
     b = Board.new(10,10)
     b.rows.should eq 10
     b.columns.should eq 10
@@ -80,7 +80,7 @@ describe "Board" do
     b.cell_value(6,5).should eq :on
     b.cell_value(5,4).should eq :off
     b.cell_value(5,6).should eq :off
-    b.next_generation
+    b.next_generation(true)
     b.neighbor_count(5,5).should eq 2
     b.cell_value(5,5).should eq :on
     b.cell_value(4,5).should eq :off
